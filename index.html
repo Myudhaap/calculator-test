@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculator</title>
+  <style>
+    .wrapper{
+      border: 1px solid gray;
+      width: auto;
+      height: auto;
+      padding: 2px;
+    }
+    button{
+      width: 100%;
+      border-radius: 4px;
+      border: none;
+    }
+    .red{
+      background-color: red;
+      color: white;
+      font: bold;
+    }
+    .blue{
+      background-color: blue;
+    }
+    .orange{
+      background-color: orange;
+    }
+    .green{
+      background-color: green;
+    }
+    .black{
+      background-color: black;
+      color: white;
+    }
+
+    .wrapper-grid{
+      display: grid;
+      grid-gap: 3px;
+      grid-template-columns: 50px 50px 50px 50px;
+    }
+
+    .wrapper-grid input{
+      grid-column: 1/ span 4;
+    }
+
+    .wrapper-grid .red{
+      grid-column: 1 / span 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <p>Let's Practice</p>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="4"><input type="text" id="calcDisplay" name="calcDisplay"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="2"><button class="red" id="clearAllButton">AC</button></td>
+          <td><button class="blue" id="clearButton">C</button></td>
+          <td><button class="orange operators">*</button></td>
+        </tr>
+        <tr>
+          <td><button class="numbers">7</button></td>
+          <td><button class="numbers">8</button></td>
+          <td><button class="numbers">9</button></td>
+          <td><button class="orange operators">/</button></td>
+        </tr>
+        <tr>
+          <td><button class="numbers">4</button></td>
+          <td><button class="numbers">5</button></td>
+          <td><button class="numbers">6</button></td>
+          <td><button class="orange  operators">+</button></td>
+        </tr>
+        <tr>
+          <td><button class="numbers">1</button></td>
+          <td><button class="numbers">2</button></td>
+          <td><button class="numbers">3</button></td>
+          <td><button class="orange  operators">-</button></td>
+        </tr>
+        <tr>
+          <td><button class="black">+-</button></td>
+          <td><button class="numbers">0</button></td>
+          <td><button class="black">.</button></td>
+          <td><button class="green" id="result">=</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- <div class="wrapper-grid">
+      <input type="text" name="display">
+      <button class="red">AC</button>
+      <button class="blue">C</button>
+      <button>*</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button class="orange">*</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button class="orange">+</button>
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button class="orange">-</button>
+      <button class="black">+-</button>
+      <button>0</button>
+      <button class="black">.</button>
+      <button class="green">=</button>
+  </div> -->
+
+  <script>
+    let calcDisplay = document.getElementById("calcDisplay");
+    let numbers = document.getElementsByClassName("numbers");
+    let operators = document.getElementsByClassName("operators");
+    let resultButton = document.getElementById("result");
+    // console.info(resultButton)
+    for(const number of numbers){
+      number.addEventListener('click', function(){
+        calcDisplay.value = calcDisplay.value + number.innerHTML;
+      });
+    };
+
+    for(const operator of operators){
+      operator.addEventListener("click",function(){
+        calcDisplay.value = calcDisplay.value + operator.innerHTML;
+      });
+    };
+
+    document.getElementById('clearAllButton').onclick = function(){
+      calcDisplay.value = "";
+    };
+
+    document.getElementById("clearButton").onclick = function(){
+      let maxLength = calcDisplay.value.length;
+      calcDisplay.value = calcDisplay.value.substr(0, maxLength - 1);
+    };
+
+    resultButton.onclick = function(){
+      try{
+        calcDisplay.value = eval(calcDisplay.value);
+      }catch(err){
+        console.error("Error Handling");
+      }
+    };  
+
+    calcDisplay.oninput  = function(){
+      var invalidInput = calcDisplay.value.match(/^[0-9\*\+\-\/]$/);
+      if(invalidInput){
+        console.log("Valid Input");
+      }else{
+        console.log("Invalid Input");
+      };
+    };
+  </script>
+</body>
+</html>
